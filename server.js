@@ -10,9 +10,14 @@ app.listen(2022, (err) => {
 /**
  * req = request object, res = response object
  */
-app.get('/', function (req, res) {
-    res.send('GET request to homepage')
-})
+// app.get('/', function (req, res) {
+//     res.sendFile(__dirname + 'index.html');
+// })
+
+/**
+ * Sends what is in public if link/route does not match.
+ */
+app.use(express.static('./public'));
 
 app.get('/profile/:id', function (req, res) {
     res.render("profile.ejs", {
