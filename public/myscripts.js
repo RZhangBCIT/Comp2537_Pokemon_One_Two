@@ -7,7 +7,7 @@ function processPokemonResponse(data) {
     add_image += `<a href="/profile/${data.id}">`
     add_image += `<img src="${data.sprites.other["official-artwork"].front_default}"`
     add_image += `</a>`
-    add_image += `<h2> ${data.name} </h2>`
+    add_image += `<h2 class="pokemon_name"> ${data.name} </h2>`
     add_image += `</div>`
 }
 
