@@ -7,8 +7,20 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
-        This pokemon has the id: <%= id %>
-    </h1>
+    <main>
+        <div class="image">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/<%= id %>.png">
+        </div>
+
+        <div class="stats">
+            <h1><%= name %></h1>
+            HP: <%= hp %> <br>
+            Attack: <%= attack %> <br>
+            Defense: <%= defense %> <br>
+            Special Attack: <%= special_attack %> <br>
+            Special Defense: <%= special_defense %> <br>
+            Speed: <%= speed %> <br>
+        </div>
+    </main>
 </body>
 </html>
