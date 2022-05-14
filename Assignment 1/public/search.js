@@ -3,10 +3,29 @@ habitat_global = ""
 type_global = ""
 generation_global = ""
 
+function processPokemonResponse(data) {
+    add_image += `<div class="pokemon_image">`
+    add_image += `<a href="/profile/${data.id}">`
+    add_image += `<img src="${data.sprites.other["official-artwork"].front_default}">`
+    add_image += `</a>`
+    add_image += `<h2 class="pokemon_name"> ${data.name} </h2>`
+    add_image += `</div>`
+}
+
 function processType(data) {
-    for (i = 0; i < data.types.length; i++)
-        if (data.types[i].type.name == type_global)
-            $("main").append("<p>"+ data.id + "</p>");
+    add_image = ""
+    for (i = 0; i < data.types.length; i++) {
+        if (data.types[i].type.name === type_global) {
+            add_image += `<div class="pokemon_image">`
+            add_image += `<a href="/profile/${data.id}">`
+            add_image += `<img src="${data.sprites.other["official-artwork"].front_default}"`
+            add_image += `</a>`
+            add_image += `<h2 class="pokemon_name"> ${data.name} </h2>`
+            add_image += `</div>`
+            // $("main").append("<p>"+ data.id + "</p>");
+        }
+    }
+    $("main").append(add_image);
 }
 
 function displayType(type_) {
@@ -21,11 +40,21 @@ function displayType(type_) {
     }
 }
 
-function processHabitat(data) {
+async function processHabitat(data) {
+    add_image = ""
     if (data.habitat !== null) {
-        if (data.habitat.name == habitat_global)
-            $("main").append("<p>"+ data.id + "</p>");
+        if (data.habitat.name == habitat_global) {
+            // $("main").append("<p>"+ data.id + "</p>");
+            pokemon_id = data.id
+            await $.ajax({
+                gen_process: "GET",
+                url: `https://pokeapi.co/api/v2/pokemon/${pokemon_id}`,
+                success: processPokemonResponse
+            })
+        }
     }
+    $("main").append(add_image)
+
 }
 
 function displayHabitat(habitat_) {
@@ -40,7 +69,8 @@ function displayHabitat(habitat_) {
     }
 }
 
-function processRegion(data) {
+async function processRegion(data) {
+    add_image = ""
     if (region_global == "Kanto") {
         generation_global = "generation-i"
     } else if (region_global == "Johto") {
@@ -58,8 +88,16 @@ function processRegion(data) {
     } else if (region_global == "Galar") {
         generation_global = "generation-viii"
     }
-    if (data.generation.name == generation_global)
-    $("main").append("<p>"+ data.id + "</p>");
+    if (data.generation.name == generation_global) {
+        pokemon_id = data.id
+        await $.ajax({
+            gen_process: "GET",
+            url: `https://pokeapi.co/api/v2/pokemon/${pokemon_id}`,
+            success: processPokemonResponse
+        })
+    }
+    $("main").append(add_image)
+    // $("main").append("<p>"+ data.id + "</p>");
 }
 
 function displayRegion(region_) {
@@ -74,9 +112,19 @@ function displayRegion(region_) {
     }
 }
 
-function processGeneration(data) {
-    if (data.generation.name == generation_global)
-        $("main").append("<p>"+ data.id + "</p>");
+async function processGeneration(data) {
+    pokemon_id = ""
+    add_image = ""
+    if (data.generation.name == generation_global) {
+        pokemon_id = data.id
+        await $.ajax({
+            gen_process: "GET",
+            url: `https://pokeapi.co/api/v2/pokemon/${pokemon_id}`,
+            success: processPokemonResponse
+        })
+        // $("main").append("<p>"+ data.id + "</p>");
+    }
+    $("main").append(add_image)
 }
 
 function displayGeneration(gen_) {
@@ -95,7 +143,7 @@ function setup() {
 
     $("#pokemon_type").change(() => {
         pokemon_type = $("#pokemon_type option:selected").val();
-        displayType($("#pokemon_type option:selected").val())
+        displayType($("#pokemon_type option:selected").val());
     })
 
     $("#region").change(() => {
