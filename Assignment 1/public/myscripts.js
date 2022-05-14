@@ -5,7 +5,7 @@ add_image = ""
 function processPokemonResponse(data) {
     add_image += `<div class="pokemon_image">`
     add_image += `<a href="/profile/${data.id}">`
-    add_image += `<img src="${data.sprites.other["official-artwork"].front_default}"`
+    add_image += `<img src="${data.sprites.other["official-artwork"].front_default}">`
     add_image += `</a>`
     add_image += `<h2 class="pokemon_name"> ${data.name} </h2>`
     add_image += `</div>`
