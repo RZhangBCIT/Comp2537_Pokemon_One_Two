@@ -139,11 +139,27 @@ function displayGeneration(gen_) {
     }
 }
 
+function addNewEvent(pokemon_type) {
+    $.ajax({
+        url: "http://localhost:1444/timeline/insert",
+        type: "put",
+        data: {
+            text: `Client has searched for ${pokemon_type} type pokemon!`,
+            hits: 1,
+            time: "At time = X"
+        },
+        success: (res) => {
+            console.log(res)
+        }
+    })
+}
+
 function setup() {
 
     $("#pokemon_type").change(() => {
         pokemon_type = $("#pokemon_type option:selected").val();
         displayType($("#pokemon_type option:selected").val());
+        addNewEvent(pokemon_type);
     })
 
     $("#region").change(() => {

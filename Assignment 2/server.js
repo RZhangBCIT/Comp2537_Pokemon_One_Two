@@ -5,9 +5,9 @@ app.set('view engine', 'ejs');
 /**
  * req = request object, res = response object
  */
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + 'index.html');
-})
+// app.get('/', function (req, res) {
+//     res.sendFile(__dirname + '/index.html');
+// })
 
 /**
  * Sends what is in public if link/route does not match.
@@ -94,10 +94,6 @@ app.listen(process.env.PORT || 1444, function (err) {
     }
 })
 
-// mongoose.connect("mongodb+srv://pokemon:comp2537@cluster0.thyz8.mongodb.net/pokemonDB?retryWrites=true&w=majority", {
-//     useNewUrlParser: true, useUnifiedTopology: true
-// });
-
 // const pokemonSchema = new mongoose.Schema({
 //     name: String,
 //     type: String,
@@ -112,7 +108,12 @@ app.listen(process.env.PORT || 1444, function (err) {
 
 // const pokemonModel = mongoose.model("pokemons", pokemonSchema);
 
-mongoose.connect("mongodb+srv://pokemon:comp2537@cluster0.thyz8.mongodb.net/timelineDB?retryWrites=true&w=majority", {
+const bodyparser = require("body-parser");
+app.use(bodyparser.urlencoded({
+    extended: true
+}))
+
+mongoose.connect("mongodb+srv://pokemon:comp2537@cluster0.thyz8.mongodb.net/pokemonDB?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -140,8 +141,8 @@ app.put('/timeline/insert', function (req, res) {
     console.log(req.body);
     timelineModel.create({
         'text': req.body.text,
-        'time': req.body.time,
-        'hits': req.body.hits
+        'hits': req.body.hits,
+        'time': req.body.time
     }, function (err, data) {
         if (err) {
             console.log("Error! " + err);
