@@ -1,0 +1,17 @@
+.likeButtons:hover {
+    background-color: lightgreen;
+}
+
+.likeButtons:active {
+    background-color: green;
+    color: white;
+}
+
+.deleteButtons:hover {
+    background-color: gold;
+}
+
+.deleteButtons:active {
+    background-color: red;
+    color: white;
+}
